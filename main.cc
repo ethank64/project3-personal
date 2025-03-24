@@ -31,44 +31,6 @@ using namespace std;
 char menu();
 
 int main(){
-	Planner p; // Create Planner object
-
-    // Load assignments from file
-    ifstream infile("test.txt");
-    if (infile) {
-        cout << "Loading assignments from file...\n";
-        p.load(infile);
-        infile.close();
-    } else {
-        cout << "No existing file found. Starting with an empty planner.\n";
-    }
-
-    // Display current assignments
-    cout << "Current Assignments:\n";
-    p.display(cout);
-
-    // Add a new assignment manually
-    cout << "\nEnter a new assignment:\n";
-    Assignment newAssignment;
-    cin >> newAssignment;
-    p.add(newAssignment);
-
-    // Display updated list
-    cout << "\nUpdated Assignments:\n";
-    p.display(cout);
-
-    // Save to file
-    ofstream outfile("saved_assignments.txt");
-    if (outfile) {
-        cout << "Saving assignments to file...\n";
-        p.save(outfile);
-        outfile.close();
-    } else {
-        cout << "Error saving to file.\n";
-    }
-
-
-	/*
     char choice, ch;
     Assignment a, found;
     DateTime due_by;
@@ -176,7 +138,7 @@ int main(){
 		homework.save(fout);
     else
 		cout << "Problem with saving data!\n";
-    fout.close();*/
+    fout.close();
 
 	return 0;
 }
