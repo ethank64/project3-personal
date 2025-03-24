@@ -23,7 +23,7 @@ class node{
 		 * @param d - the data you want to store (default to whatever the default constructor makes)
 		 * @param n - the address to the next node in the list
 		 */
-        node(value_type d = value_type(), node *n = NULL) {data_field = d;  next_field = n;}
+        node(value_type d = value_type(), node *n = NULL, node *p = NULL) {data_field = d;  next_field = n; prev_field = p;}
 
         // Mutator functions
         /**
@@ -38,7 +38,9 @@ class node{
          * 
          * @param n - the address to assign to the next_field member
          */
-		void set_next(node *n) {next_field = n;}
+		void set_next(node<T> *n) {next_field = n;}
+
+        void set_prev(node<T> *p) {prev_field = p;}
 
         // Accessor functions
         /**

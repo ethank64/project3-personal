@@ -44,7 +44,7 @@ int main(){
 	getline(cin, username);
 	filename = username + ".txt";
 	// The default constructor is called here
-	Planner homework;
+	Planner<Assignment> homework;
     fin.open(filename.c_str());
     if(!fin.fail()){
         homework.load(fin);
@@ -117,7 +117,7 @@ int main(){
 				cout << "Thank you for using the Assignment Manager.\n";
 				break;
 			case 't':{   // copy constructor test
-				Planner acopy(homework); // you must write all 3 of the Big 3
+				Planner<Assignment> acopy(homework); // you must write all 3 of the Big 3
 				cout << "Enter the name of the assignment that is to be removed.\n ";
 				cin >> ws;
 				getline(cin, assignmentname);

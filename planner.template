@@ -3,7 +3,6 @@
  * @author Ethan Knotts
  */
 
-#include "planner.h"
 #include <cctype>
 
 using namespace std;
@@ -17,7 +16,7 @@ Planner<T>::Planner() {
 template <class T>
 Planner<T>::~Planner() {
     while (head != nullptr) {
-        node *tmp = head;
+        node<T> *tmp = head;
         head = head -> next();
         delete tmp;
     }
@@ -40,12 +39,15 @@ Planner<T>::Planner(const Planner<T> &other) {
 
 template <class T>
 void Planner<T>::add(Assignment assignment) {
-    node<T> *tmp = new node(assignment);
+    node<T> *tmp = new node<T>(assignment);
 
     if (head == nullptr) {
         head = tmp;
         tail = tmp;
     } else {
+        // Set prev of new node
+        tmp -> set_prev(tail);
+
         // Update tail
         tail -> set_next(tmp);
         tail = tmp;
@@ -105,11 +107,20 @@ void Planner<T>::remove(string name) {
     node<T> *prev = nullptr;
 
     while (tmp != nullptr) {
+        // If the name is a match...
         if (tmp -> data().get_name() == name) {
+            // If it's the first item...
             if (prev == nullptr) {
                 head = tmp -> next();
             } else {
-                prev -> set_next(tmp -> next());
+                // Set previous node's next pointer
+                tmp -> prev() -> set_next(tmp -> next());
+
+                // Make sure the node after tmp exists
+                if (tmp -> next() != nullptr) {
+                    tmp -> next() -> set_prev(tmp -> prev());
+                }
+                // prev -> set_next(tmp -> next());
             }
 
             delete tmp;
@@ -196,6 +207,16 @@ void Planner<T>::display(ostream &out) {
     while (tmp != nullptr) {
         out << tmp -> data();
         tmp = tmp -> next();
+    }
+}
+
+template <class T>
+void Planner<T>::reverse_display(ostream &out) {
+    node<T> *tmp = tail;
+
+    while (tmp != nullptr) {
+        out << tmp -> data();
+        tmp = tmp -> prev();
     }
 }
 

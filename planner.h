@@ -138,6 +138,8 @@ class Planner {
          */
         void reverse_display(std::ostream &out);
     private:
-        node *head;
-        node *tail;
+        node<T> *head;
+        node<T> *tail;
 };
+
+#include "planner.template"
