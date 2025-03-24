@@ -8,12 +8,14 @@
 
 using namespace std;
 
-Planner::Planner() {
+template <class T>
+Planner<T>::Planner() {
     head = nullptr;
     tail = nullptr;
 }
 
-Planner::~Planner() {
+template <class T>
+Planner<T>::~Planner() {
     while (head != nullptr) {
         node *tmp = head;
         head = head -> next();
@@ -21,12 +23,13 @@ Planner::~Planner() {
     }
 }
 
-Planner::Planner(const Planner &other) {
+template <class T>
+Planner<T>::Planner(const Planner<T> &other) {
     // Initialize new private data
     head = nullptr;
     tail = nullptr;
 
-    node *tmp = other.head;
+    node<T> *tmp = other.head;
 
     // Loop through the other Planner and copy over all the data
     while (tmp != nullptr) {
@@ -35,8 +38,9 @@ Planner::Planner(const Planner &other) {
     }
 }
 
-void Planner::add(Assignment assignment) {
-    node *tmp = new node(assignment);
+template <class T>
+void Planner<T>::add(Assignment assignment) {
+    node<T> *tmp = new node(assignment);
 
     if (head == nullptr) {
         head = tmp;
@@ -52,8 +56,9 @@ void Planner::add(Assignment assignment) {
     }
 }
 
-void Planner::find_all(DateTime dueBy) {
-    node *tmp = head;
+template <class T>
+void Planner<T>::find_all(DateTime dueBy) {
+    node<T> *tmp = head;
 
     // Loop through list
     while (tmp != nullptr) {
@@ -66,8 +71,9 @@ void Planner::find_all(DateTime dueBy) {
     }
 }
 
-unsigned Planner::waiting() {
-    node *tmp = head;
+template <class T>
+unsigned Planner<T>::waiting() {
+    node<T> *tmp = head;
     unsigned count = 0;
     
     while (tmp != nullptr) {
@@ -78,8 +84,9 @@ unsigned Planner::waiting() {
     return count;
 }
 
-Assignment Planner::find(string name) {
-    node *tmp = head;
+template <class T>
+Assignment Planner<T>::find(string name) {
+    node<T> *tmp = head;
 
     while (tmp != nullptr) {
         if (tmp -> data().get_name() == name) {
@@ -92,9 +99,10 @@ Assignment Planner::find(string name) {
     return Assignment();
 }
 
-void Planner::remove(string name) {
-    node *tmp = head;
-    node *prev = nullptr;
+template <class T>
+void Planner<T>::remove(string name) {
+    node<T> *tmp = head;
+    node<T> *prev = nullptr;
 
     while (tmp != nullptr) {
         if (tmp -> data().get_name() == name) {
@@ -113,8 +121,9 @@ void Planner::remove(string name) {
     }
 }
 
-unsigned Planner::oldest() {
-    node *tmp = head;
+template <class T>
+unsigned Planner<T>::oldest() {
+    node<T> *tmp = head;
     unsigned oldest = 0;
 
     while (tmp != nullptr) {
@@ -131,8 +140,9 @@ unsigned Planner::oldest() {
     return oldest;
 }
 
-unsigned Planner::newest() {
-    node *tmp = head;
+template <class T>
+unsigned Planner<T>::newest() {
+    node<T> *tmp = head;
 
     unsigned newest = 0;
 
@@ -154,9 +164,10 @@ unsigned Planner::newest() {
     return newest;
 }
 
-void Planner::sort() {
-    node *tmp = head;
-    node *tmp2 = head;
+template <class T>
+void Planner<T>::sort() {
+    node<T> *tmp = head;
+    node<T> *tmp2 = head;
     Assignment assignment;
 
     // Selection sort for linked list
@@ -178,8 +189,9 @@ void Planner::sort() {
     }
 }
 
-void Planner::display(ostream &out) {
-    node *tmp = head;
+template <class T>
+void Planner<T>::display(ostream &out) {
+    node<T> *tmp = head;
 
     while (tmp != nullptr) {
         out << tmp -> data();
@@ -187,8 +199,9 @@ void Planner::display(ostream &out) {
     }
 }
 
-unsigned Planner::average_wait() {
-    node *tmp = head;
+template <class T>
+unsigned Planner<T>::average_wait() {
+    node<T> *tmp = head;
     unsigned count = 0;
     unsigned total = 0;
 
@@ -202,15 +215,17 @@ unsigned Planner::average_wait() {
     return total / count;
 }
 
-unsigned Planner::due_next() {
+template <class T>
+unsigned Planner<T>::due_next() {
     if (head == nullptr) return 0;
 
     Assignment nextDueAssignment = head -> data();
     return nextDueAssignment.minutes_til_due();
 }
 
-void Planner::save(ostream &out) {
-    node *tmp = head;
+template <class T>
+void Planner<T>::save(ostream &out) {
+    node<T> *tmp = head;
 
     while (tmp != nullptr) {
         out << tmp -> data();
@@ -218,10 +233,11 @@ void Planner::save(ostream &out) {
     }
 }
 
-void Planner::load(istream &in) {
+template <class T>
+void Planner<T>::load(istream &in) {
     // Clear the existing list
     while (head != nullptr) {
-        node *tmp = head;
+        node<T> *tmp = head;
         head = head -> next();
         delete tmp;
     }
@@ -243,7 +259,8 @@ void Planner::load(istream &in) {
     sort();
 }
 
-Planner Planner::operator = (const Planner &other) {
+template <class T>
+Planner<T> Planner<T>::operator = (const Planner<T> &other) {
     // Check for equality edge case
     if (this == &other) return *this;
 
@@ -251,7 +268,7 @@ Planner Planner::operator = (const Planner &other) {
     head = nullptr;
     tail = nullptr;
 
-    node *tmp = other.head;
+    node<T> *tmp = other.head;
 
     // Loop through the list and add all elements
     while (tmp != nullptr) {

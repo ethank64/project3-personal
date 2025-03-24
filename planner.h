@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 
+template <class T>
 class Planner {
     public:
         /**
@@ -129,6 +130,13 @@ class Planner {
          * @param in Input stream to load from
          */
         void load(std::istream &in);
+
+        /**
+         * reverse_display
+         * @brief Prints the all assignments in the list in reverse order
+         * @param out Output stream to display to
+         */
+        void reverse_display(std::ostream &out);
     private:
         node *head;
         node *tail;

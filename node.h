@@ -10,11 +10,12 @@
 #define NODE_H
 #include "assignment.h"
 
+template <class T>
 class node{
     public:
         // If you want this node to store a different type of data, change Assignment to that type
         // in the next line, and that is all you will have to do.
-		typedef Assignment value_type;
+		typedef T value_type;
 
 		/**
 		 * @brief Construct a new node object
@@ -54,6 +55,8 @@ class node{
          */
         node* next() {return next_field;}
 
+        node* prev() {return prev_field;}
+
         /**
          * @brief return the address to the next node as a const pointer
          * 
@@ -61,9 +64,12 @@ class node{
          */
 		const node* next() const {return next_field;}
 
+        const node* prev() const {return prev_field;}
+
     private:
 		value_type data_field;
 		node* next_field;
+        node* prev_field;
 };
 
 #endif
